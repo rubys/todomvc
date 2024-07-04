@@ -1,59 +1,34 @@
-# Express • [TodoMVC](http://todomvc.com)
+# Express • [TodoMVC](http://todomvc.com), adapted for [fly.io](https://fly.io/)
 
-> Express is a minimal and flexible Node.js web application framework that provides a robust set of features for web and mobile applications.
+This is a fork of [jaredhanson/todos-express-sqlite](https://github.com/jaredhanson/todos-express-sqlite), with the following modifications:
 
-&ndash; _[Express](https://expressjs.com/)_
+* `db.js` is modified to use postgresql instead of sqlite3
+* `bin/www` is modified to reflect new project name in debug statement
 
-## Resources
-
-- [Website](https://expressjs.com/)
-- [API Reference](https://expressjs.com/en/4x/api.html)
-
-### Support
-
-- [Stack Overflow](https://stackoverflow.com/questions/tagged/express)
-- [Google Groups](https://groups.google.com/g/express-js)
-
-*Let us [know](https://github.com/jaredhanson/todos-express-sqlite/issues) if you discover anything worth sharing.*
+With these changes multiple replicas of this application can be deployed, even
+in multiple regions.
 
 
-## Implementation
-
-In contrast to a typical [TodoMVC](https://todomvc.com) app, this app does not
-utilize a frontend JavaScript framework or make use of client-side capabilities
-such as `localStorage`.  Instead, it illustrates how to build a todo app using
-a backend for application logic and persistence, along with HTML forms for
-interaction.
-
-This app is built using [Node.js](https://nodejs.org/) along with the [Express](https://expressjs.com/)
-web framework.  Data is persisted to a [SQLite](https://www.sqlite.org/)
-database.  HTML pages are rendered using [EJS](https://ejs.co/) templates, and
-are styled using vanilla CSS.  HTML forms are used to modify data, rather than a
-RESTful API.  That being said, the forms serialize data in a format inspired by
-[Todo-Backend](https://todobackend.com/).
-
-To run this app, clone the repository and install dependencies:
-
-```bash
-$ git clone https://github.com/jaredhanson/todos-express-sqlite.git
-$ cd todos-express-sqlite
-$ npm install
-```
-
-Then start the server:
+# Deployment
 
 ```
-$ npm start
+git clone https://github.com/rubys/todos-express-postgresql.git -o todomvc
+cd todomvc
+fly launch
 ```
 
-Navigate to [`http://localhost:3000`](http://localhost:3000).
+If you visit this application, you will see a standard todo list.
 
-The scaffolding for this app was generated using [Express application generator](https://expressjs.com/en/starter/generator.html):
+To create additional machines, run:
 
-```bash
-$ express -v ejs todos-express-sqlite
+```
+fly machine clone
 ```
 
-## Credit
+This will prompt you for a machine to clone, pick any one.
 
-Created by [Jared Hanson](https://www.jaredhanson.me/)
+Notes: 
+
+* [fly machine clone](https://fly.io/docs/flyctl/machine-clone/) accepts a `--region` option.  Feel free to create todo lists [around the world](https://fly.io/docs/reference/regions/#fly-io-regions).
+* By default, all machines will be configured to
+  [automatically stop and start](https://fly.io/docs/apps/autostart-stop/).
