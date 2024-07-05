@@ -19,16 +19,10 @@ fly launch --from https://github.com/rubys/todomvc.git
 
 If you visit this application, you will see a standard todo list.
 
-To create additional machines, run:
+To create additional machines in other regions, run:
 
 ```
 fly scale count 3 --region dfw,waw,syd
 ```
 
-This will prompt you for a machine to clone, pick any one.
-
-Notes: 
-
-* [fly machine clone](https://fly.io/docs/flyctl/machine-clone/) accepts a `--region` option.  Feel free to create todo lists [around the world](https://fly.io/docs/reference/regions/#fly-io-regions).
-* By default, all machines will be configured to
-  [automatically stop and start](https://fly.io/docs/apps/autostart-stop/).
+Note: By default, all machines will be configured to [automatically stop and start](https://fly.io/docs/apps/autostart-stop/).
