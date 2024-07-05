@@ -22,7 +22,7 @@ If you visit this application, you will see a standard todo list.
 To create additional machines, run:
 
 ```
-fly scale count 1 --region dfw,waw,syd
+fly scale count 3 --region dfw,waw,syd
 ```
 
 This will prompt you for a machine to clone, pick any one.
