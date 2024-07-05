@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var db = require('../db');
+var pubsub = require('../pubsub');
 
 function fetchTodos(req, res, next) {
   db.all('SELECT * FROM todos', [], function(err, rows) {
@@ -17,6 +18,7 @@ function fetchTodos(req, res, next) {
     res.locals.todos = todos;
     res.locals.activeCount = todos.filter(function(todo) { return !todo.completed; }).length;
     res.locals.completedCount = todos.length - res.locals.activeCount;
+    res.locals.timestamp = pubsub.timestamp;
     next();
   });
 }

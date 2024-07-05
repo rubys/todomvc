@@ -1,8 +1,10 @@
 var pg = require('pg');
 
+var pubsub = require('./pubsub');
+
 var db = null;
 
-async function query(query, params, callback) {
+async function executeQuery(query, params, callback) {
   // if the db is not connected, connect
   if (!db) {
     db = new pg.Client({ connectionString: process.env.DATABASE_URL });
@@ -15,7 +17,10 @@ async function query(query, params, callback) {
       completed INTEGER \
     )");
 
-    db.on('end', () => { process.exit(1) });
+    db.on('end', err => {
+      console.error('Database connection ended', err);
+      process.exit(1)
+    });
   }
 
   // replace ? with $1, $2, etc.
@@ -28,5 +33,15 @@ async function query(query, params, callback) {
     .catch(callback);
 }
  
-// mimic the behavior of the sqlite3 module
-module.exports = { all: query, run: query }
+// mimic the behavior of the sqlite3 module;
+// broadcast changes to all web socket clients
+module.exports = {
+  all: executeQuery,
+
+  run: (query, params, callback) => {
+    executeQuery(query, params, (err, rows) => {
+      pubsub.publish();
+      callback(err, rows);
+    });
+  }
+}

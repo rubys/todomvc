@@ -2,19 +2,19 @@
 
 This is a fork of [jaredhanson/todos-express-sqlite](https://github.com/jaredhanson/todos-express-sqlite), with the following modifications:
 
-* `db.js` is modified to use postgresql instead of sqlite3
-* `bin/www` is modified to reflect new project name in debug statement
+* adds websocket support.  Launch todo lists in multiple tabs/windows/browsers; changes made in one are reflected in all.
+* replaced Sqlite3 with PostgreSQL for the database.
+* adds Redis support for coordinating websocket updates.
 
-With these changes multiple replicas of this application can be deployed, even
-in multiple regions.
+With these changes multiple replicas of this application can be deployed, even in multiple regions.
 
 
 # Deployment
 
+In an empty directory, run:
+
 ```
-git clone https://github.com/rubys/todos-express-postgresql.git -o todomvc
-cd todomvc
-fly launch
+fly launch --from https://github.com/rubys/todomvc.git
 ```
 
 If you visit this application, you will see a standard todo list.
@@ -22,7 +22,7 @@ If you visit this application, you will see a standard todo list.
 To create additional machines, run:
 
 ```
-fly machine clone
+fly scale count 1 --region dfw,waw,syd
 ```
 
 This will prompt you for a machine to clone, pick any one.
