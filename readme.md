@@ -2,9 +2,9 @@
 
 This is a fork of [jaredhanson/todos-express-sqlite](https://github.com/jaredhanson/todos-express-sqlite), with the following modifications:
 
-* adds websocket support.  Launch todo lists in multiple tabs/windows/browsers; changes made in one are reflected in all.
+* adds WebSocket support.  Launch todo lists in multiple tabs/windows/browsers; changes made in one are reflected in all.
 * replaced Sqlite3 with PostgreSQL for the database.
-* adds Redis support for coordinating websocket updates.
+* adds Redis support for coordinating WebSocket updates.
 
 With these changes multiple replicas of this application can be deployed, even in multiple regions.
 
