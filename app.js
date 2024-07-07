@@ -29,8 +29,6 @@ app.use('/', indexRouter);
 app.ws('/websocket', ws => {
   // update client on a best effort basis
   try {
-    console.log('pubsub', pubsub);
-    console.log('timestamp', pubsub.timestamp);
     ws.send(pubsub.timestamp.toString());
   } catch (error) {
     console.error(error)

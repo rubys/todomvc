@@ -38,7 +38,6 @@ module.exports = {
   },
 
   get timestamp() {
-    console.log('TIMESTAMP', timestamp); // Debug
     return timestamp;
   }
 }
