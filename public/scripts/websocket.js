@@ -26,13 +26,15 @@ function openws() {
     if (!interval) interval = setInterval(openws, 5000);
   }
 
-  ws.onmessage = event => {
+  ws.onmessage = async event => {
     // pause updates if user is entering text
     let editing = [...document.querySelectorAll('input')]
       .some(input => input.type == 'text' && input.clientWidth && input.value);
 
     if (!editing && event.data != document.body.dataset.timestamp) {
-      window.location.reload()
+      let response = await fetch(window.location.href, { headers: { 'Accept': 'text/html' } });
+      let newdoc = new DOMParser().parseFromString(await response.text(), 'text/html');
+      document.body.replaceWith(newdoc.body);
     }
   }
 };
